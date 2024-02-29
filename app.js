@@ -29,22 +29,11 @@ const port = process.env.PORT || 8080;
 //   next();
 // });
 
-// //Connect to MongoDB
-// mongoose.connect('mongodb://localhost:27017/datamodalings', {  });
-// const db = mongoose.connection;
- 
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', () => {
-//     console.log('Connected to MongoDB');
-// });
 
 
- 
 //MongoDB Atlas connection using native driver
  const MongoClient = require('mongodb').MongoClient;
 //  const uri='mongodb+srv://indusunkari7:hXPMEP6vaU1fJCeQ@cluster0.rcqzajr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-// const uri ='mongodb+srv://indusunkari7:FR5ajziZ3Qu4vAa6@cluster0.pszusn4.mongodb.net/?retryWrites=true&w=majority';
-// const uri='mongodb+srv://indusunkari7:hXPMEP6vaU1fJCeQ@cluster0.rcqzajr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 // const uri='mongodb+srv://indusunkari7:HTMugZ8jIw1LHT2G@cluster0.1mvalom.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 // mongoose.connect(uri, { });
 const uri='mongodb+srv://indusunkari7:CtSCdAlRq0HFMCMo@cluster0.vwxyf4o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
