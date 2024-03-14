@@ -1,9 +1,15 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const uploadSchema = new Schema({
-  file: { type: Buffer, required: true },
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  fileName: {
+    type: String,
+    required: true,
+  },
+  filePath: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('Upload', uploadSchema);
-
+module.exports = mongoose.model('uploadModel', userSchema);
