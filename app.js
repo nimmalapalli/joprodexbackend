@@ -16,6 +16,7 @@ const pincodeRoute = require('./routes/pincodeRoute.js');
 const uploadRoute = require('./routes/uploadRoute.js');
 const otpRoute = require('./routes/otpRoute.js');
 
+
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const path = require('path');
@@ -39,7 +40,10 @@ const port = process.env.PORT || 8080;
 // });
 const uri='mongodb+srv://nikhilareddygandlapati:fO8kXWN8aMJKyIyf@cluster0.emcygxj.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(uri, {
+mongoose.connect(uri, {   
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+
   
   });
 const db = mongoose.connection;
@@ -50,15 +54,16 @@ db.once('open', () => {
   console.log('Connected to MongoDB Atlas with Mongoose');
 });
 
-app.use(express.json()); 
+app.use(express.json({extended: false}));
+app.use(express.urlencoded({ extended: true })) 
 app.use(cors());
 app.use('/api', authRoute);
 app.use('/api', router);
 app.use('/api', shipmentRoute);
 app.use('/api', paymentRoute);
 app.use('/api', appRoute);
-app.use('/api',otpRoute)
-app.use('/api',pincodeRoute);
+app.use('/api', otpRoute)
+app.use('/api', pincodeRoute);
 app.use('/api', uploadRoute);
  
 app.use(cors());
@@ -84,7 +89,7 @@ const userSchema = new Schema({
   uploads: [{ type: Schema.Types.ObjectId, ref: 'Upload' }], 
 });
 
-const User = mongoose.model('User', userSchema);
+const Users = mongoose.model('Users', userSchema);
 
 
 const crudSchema = new Schema({
@@ -129,79 +134,83 @@ const paymentControllerSchema = new Schema({
 
 const PaymentController = mongoose.model('PaymentController', paymentControllerSchema);
 
-const uploadSchema = new Schema({
-  file : { type: Buffer, required: true },
-})
-// const Upload = mongoose.model('Upload', uploadSchema);
+let Upload;
 
+try {
+  Upload = mongoose.model('Upload');
+} catch (error) {
+  
+  const uploadSchema = new Schema({
+    file: { type: Buffer, required: true },
+  });
+
+  Upload = mongoose.model('Upload', uploadSchema);
+}
 
 app.get('/created', async (req, res) => {
   let newUser; 
   try {
-    const existingUser = await User.findOne({ companyname: 'snvsolutions' });
+    const existingUser = await Users.findOne({ companyname: 'snvsolutions' });
 
     if (existingUser) {
       existingUser.name = 'newName';
       await existingUser.save();
     } else {
-      newUser = await User.create({
-        name: 'deepika',
-        email: 'deepu@gmail.com',
-        mobile: 9899987679,
+      newUser = await Users.create({
+        name: 'deepika11',
+        email: 'deepu1@gmail.com',
+        mobile: 98991987679,
         password: 'deepu',
-        companyname: 'snvsolutions',
+        companyname: 'snvsoluwtions',
       });
     }
 
-    const newUpload = await uploadModel.create({
-      file: 'c:\Users\GandlapatiNikhilaRed\Downloads\my adhaar.jpg'
+    const newUpload = await Upload.create({
+      file: 'c:\\Users\\GandlapatiNikhilaRed\\Downloads\\myy adhaar.jpg'
     });
+    
     if (newUser) {
-      newUser.uploads.push(newUpload._id);
+      newUser.uploads.push(newUpload);
       await newUser.save();
 
-
       const newCrud = await Crud.create({
-        order: 'lemon',
+        order: 'lemons',
         date: '26/08/2028',
-        payment: 7890,
-        product: 'items',
-        customer: 'revathi',
+        payment: 78901,
+        product: 'itemss',
+        customer: 'revathii',
         phone: 8887678879,
         weight: '7.6',
-        user: newUser._id,
+        user: newUser,
       });
 
       const newShipment = await Shipment.create({
         order_Id: 456765,
-        customer_Name: 'swetha',
-        customer_Address: 'nizampet',
+        customer_Name: 'swethaa',
+        customer_Address: 'nizampeta',
         billing_Num: '876678',
-        pickup_loc: 'ananatapur',
+        pickup_loc: 'ananatapura',
         pin_Code: 515401,
         shipping_Date: '18/09/2022',
         user: newUser._id,
-        crud: newCrud._id,
+        crud: newCrud,
       });
 
       const newPaymentController = await PaymentController.create({
-        name: 'nikhila',
+        name: 'nikhilaa',
         amount: 100,
         product_name: 'ironbox',
         description: 'dfgd',
-        user: newUser._id,
-        crud: newCrud._id,
-        shipment: newShipment._id,
+        user: newUser,
+        crud: newCrud,
+        shipment: newShipment,
       });
 
-      newUser.cruds.push(newCrud._id);
-      newUser.shipments.push(newShipment._id);
-      newUser.paymentcontrollers.push(newPaymentController._id);
+      newUser.paymentcontrollers.push(newPaymentController);
+  await newUser.save();
+}
 
-      await newUser.save();
-    }
-
-    res.send('User, Crud, Shipment, and PaymentController created successfully');
+    res.send('Users, Crud, Shipment, and PaymentController created successfully');
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message, message: 'Internal Server Error' });
