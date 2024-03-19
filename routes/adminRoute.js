@@ -4,9 +4,9 @@ const admin_route = express();
 const session = require("express-session");
 
 
-// const bodyParser = require("body-parser");
-// admin_route.use(bodyParser.json());
-// admin_route.use(bodyParser.urlencoded({extended:true}));
+const bodyParser = require("body-parser");
+admin_route.use(bodyParser.json());
+admin_route.use(bodyParser.urlencoded({extended:true}));
 
 
 const auth = require('../middleware/adminAuth');
