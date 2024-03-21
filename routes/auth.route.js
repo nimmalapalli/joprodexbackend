@@ -3,8 +3,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const checkAuth = require('../middleware/check-auth');
-const authController = require('../middleware/authController');
-const resetPassword = require('../middleware/authController'); 
+const resetPassword = require('../middleware/adminAuth'); 
 
 router.post('/register', async (req, res) => {
     try {
@@ -125,7 +124,6 @@ router.post('/api/forgotpassword', async (req, res, next) => {
         next(err);
     }
 });
-
 
 
 router.post('/api/resetPassword',  async (req, res, next) => {
