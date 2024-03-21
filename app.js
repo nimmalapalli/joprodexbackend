@@ -15,8 +15,6 @@ const appController = require('./mailer/controller/appController');
 const pincodeRoute = require('./routes/pincodeRoute.js');
 const uploadRoute = require('./routes/uploadRoute.js');
 const otpRoute = require('./routes/otpRoute.js');
-
-
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const path = require('path');
@@ -41,8 +39,8 @@ const port = process.env.PORT || 8080;
 const uri='mongodb+srv://nikhilareddygandlapati:fO8kXWN8aMJKyIyf@cluster0.emcygxj.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose.connect(uri, {   
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
 
   
   });
