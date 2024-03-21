@@ -81,6 +81,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "author": "indu",
+  "author": "nikhila",
   "license": "ISC"
 }

@@ -74,7 +74,7 @@ router.get('/success', async (req, res) => {
 });
 
 
-router.get("/api/getByuserid/:userId", async (req, res) => {
+router.get("/getByuserid/:userId", async (req, res) => {
     const userId = req.params.userId;
  
     try {
@@ -129,9 +129,11 @@ router.post('/forgotpassword', async (req, res, next) => {
 router.post('/resetPassword', async (req, res, next) => {
     try {
         const { resetToken, newPassword } = req.body;
-        
-
         const user = await User.findOne({ resetToken });
+
+        
+        // user.password = newPassword;
+        // await user.save();
 
         return res.status(200).json({
             success: true,
