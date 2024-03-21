@@ -15,16 +15,7 @@ if (mongoose.modelNames().includes(modelName)) {
         password: { type: String, required: true },
         companyname: { type: String, unique: true },
 
-        // confirmPassword: {
-        //     type: String,
-        //     required: [true, 'Please confirm your password.'],
-        //     validate: {
-        //         validator: function (val) {
-        //             return val === this.password;
-        //         },
-        //         message: 'Password & Confirm Password do not match!',
-        //     },
-        // },
+        
         passwordChangedAt: Date,
         passwordResetToken: String,
         passwordResetTokenExpires: Date,

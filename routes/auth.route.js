@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
             userId: user._id
         };
 
-        const token = jwt.sign(payload, "webBatch", { expiresIn: '1h' }); // Adjust the expiration time as needed
+        const token = jwt.sign(payload, "webBatch", { expiresIn: '1h' }); 
 
         return res.json({ success: true, token: token, message: 'Login successfully' });
     } catch (err) {
@@ -98,7 +98,7 @@ router.get("/api/getByuserid/:userId", async (req, res) => {
 //     })
 
 // })
-router.post('/api/forgotpassword', async (req, res, next) => {
+router.post('/forgotpassword', async (req, res, next) => {
     try {
         const user = await User.findOne({ email: req.body.email });
 
@@ -126,39 +126,26 @@ router.post('/api/forgotpassword', async (req, res, next) => {
 });
 
 
-router.post('/api/resetPassword',  async (req, res, next) => {
+router.post('/resetPassword', async (req, res, next) => {
     try {
-      const { resetToken, newPassword } = req.body;
-  
-      
-      const user = await User.findOne({ resetToken });
-  
-      
-      if (!user) {
-        return res.status(404).json({
-          success: false,
-          message: 'Invalid or expired reset token. Password reset failed.',
+        const { resetToken, newPassword } = req.body;
+        
+
+        const user = await User.findOne({ resetToken });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Password reset successfully.',
         });
-      }
-  
-      user.password = newPassword;
-      user.resetToken = undefined; 
-      await user.save();
-  
-      
-      return res.status(200).json({
-        success: true,
-        message: 'Password reset successfully.',
-      });
     } catch (err) {
-      console.error('Error in resetPassword:', err);
-      
-      return res.status(500).json({
-        success: false,
-        message: 'Internal server error. Password reset failed.',
-      });
+        console.error('Error in resetPassword:', err);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error. Password reset failed.',
+        });
     }
-  });
+});
+
   
   module.exports = {
     resetPassword,
