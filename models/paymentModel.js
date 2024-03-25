@@ -60,7 +60,7 @@ const createCharges = async(req,res)=>{
 
         const createCharge = await stripe.charges.create({
             receipt_email: 'tester@gmail.com',
-            amount: parseInt(req.body.amount)*100, //amount*100
+            amount: parseInt(req.body.amount)*100, 
             currency:'INR',
             card: req.body.card_id,
             customer: req.body.customer_id

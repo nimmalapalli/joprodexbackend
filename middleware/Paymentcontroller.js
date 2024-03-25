@@ -1,4 +1,6 @@
-const Razorpay = require('razorpay'); 
+const Razorpay = require('razorpay');
+const crypto = require('crypto');
+
 const { RAZORPAY_ID_KEY, RAZORPAY_SECRET_KEY } = process.env;
 
 const razorpayInstance = new Razorpay({
@@ -53,7 +55,34 @@ const createOrder = async(req,res)=>{
         console.log(error.message);
     }
 }
+const verifyOrder = async (req, res) => {
+    try {
+        const { order_id, payment_id } = req.body;
+        const razorpay_signature = req.headers['x-razorpay-signature'];
+        const key_secret = 'avx5L9pXCMRhxBAkLDSAl8Xu';
+
+        
+        let hmac = crypto.createHmac('sha256', key_secret);
+
+        
+        hmac.update(order_id + "|" + payment_id);
+
+        
+        const generated_signature = hmac.digest('hex');
+        if (razorpay_signature === generated_signature) {
+            res.json({ success: true, message: "Payment has been verified" });
+        } else {
+            res.json({ success: false, message: "Payment verification failed" });
+        }
+    } catch (error) {
+        
+        console.error("Error verifying payment:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 module.exports = {
     renderProductPage,
-    createOrder
+    createOrder,
+    verifyOrder
 }
