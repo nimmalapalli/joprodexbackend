@@ -54,14 +54,19 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/profile', checkAuth, (req, res) => {
-    const userId=req.userData.userId;
-    User.findById(userId).exec().then((result)=>{
-        res.json({success:true,data:result})
-}).then((err)=>{
-    res.json({success:false,message:"server error"})
-})
-
+    const userId = req.userData.userId;
+    User.findById(userId)
+        .exec()
+        .then((result) => {
+            
+            res.json({ success: true, data: result });
+        })
+        .catch((err) => {
+            
+            res.status(500).json({ success: false, message: "server error" });
+        });
 });
+
 
 router.get('/success', async (req, res) => {
     try {
@@ -74,17 +79,7 @@ router.get('/success', async (req, res) => {
 });
 
 
-router.get("/getByuserid/:userId", async (req, res) => {
-    const userId = req.params.userId;
- 
-    try {
-        const data = await User.findById(userId).exec();
-        res.json({ success: true, data });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
+
 
 // router.get("/api/getByuserid",(req,res)=>{
 //     const userId = req.params.userId;
