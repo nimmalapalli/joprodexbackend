@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
             userId: user._id
         };
 
-        const token = jwt.sign(payload, "webBatch", { expiresIn: '1h' }); 
+        const token = jwt.sign(payload, "webBatch", { expiresIn: '3h' }); 
 
         return res.json({ success: true, token: token, message: 'Login successfully' });
     } catch (err) {
