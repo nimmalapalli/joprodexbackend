@@ -78,9 +78,6 @@ router.get('/success', async (req, res) => {
     }
 });
 
-
-
-
 // router.get("/api/getByuserid",(req,res)=>{
 //     const userId = req.params.userId;
 //     User.findOne(userId,(err,data)=>{

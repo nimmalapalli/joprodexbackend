@@ -10,10 +10,9 @@ const path = require('path');
 payment_route.set('view engine','ejs');
 payment_route.set('views',path.join(__dirname, '../views'));
 
-const Paymentcontroller = require('../middleware/PaymentController');
+const Paymentcontroller = require('../middleware/Paymentcontroller');
 
 payment_route.post('/createOrder', Paymentcontroller.createOrder);
 payment_route.post('/verifyOrder', Paymentcontroller.verifyOrder);
 
 module.exports = payment_route;
-

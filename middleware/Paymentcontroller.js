@@ -60,18 +60,26 @@ const verifyOrder = async (req, res) => {
         const { order_id, payment_id } = req.body;
         const razorpay_signature = req.headers['x-razorpay-signature'];
         const key_secret = 'avx5L9pXCMRhxBAkLDSAl8Xu';
-
-        
+ 
+      
         let hmac = crypto.createHmac('sha256', key_secret);
-
+ 
         
         hmac.update(order_id + "|" + payment_id);
-
+ 
         
         const generated_signature = hmac.digest('hex');
+ 
+        
+        console.log('razorpay_signature:', razorpay_signature);
+        console.log('generated_signature:', generated_signature);
+ 
+  
         if (razorpay_signature === generated_signature) {
+            
             res.json({ success: true, message: "Payment has been verified" });
         } else {
+       
             res.json({ success: false, message: "Payment verification failed" });
         }
     } catch (error) {
@@ -81,8 +89,10 @@ const verifyOrder = async (req, res) => {
     }
 };
 
+
 module.exports = {
     renderProductPage,
     createOrder,
     verifyOrder
 }
+
